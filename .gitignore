@@ -1,0 +1,6 @@
+bin/
+*.class
+__pycache__/
+
+# Salidas generadas al ejecutar las pruebas
+pruebas/desensamblador/*Dis.asm

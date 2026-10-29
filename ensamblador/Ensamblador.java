@@ -3,8 +3,8 @@ package ensamblador;
 import java.util.ArrayList;
 import java.util.List;
  
-public final class ensamblador {
-    private ensamblador() {}
+public final class Ensamblador {
+    private Ensamblador() {}
  
 
     public static List<String> ensamblar(List<String> lineas) {

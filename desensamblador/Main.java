@@ -4,6 +4,7 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,13 +13,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/** Uso: desensamblador.Main <ruta/Prog.hack>  ->  escribe ProgDis.asm en la misma carpeta. */
 public final class Main {
     private Main() {}
 
+    /** Separador de línea de la salida (el ensamblador acepta CRLF y LF). */
     private static final String SALTO = System.lineSeparator();
 
+    @SuppressWarnings("resource") // "out" envuelve la salida estándar: no se debe cerrar
     public static void main(String[] args) {
-        PrintStream out = new PrintStream(new FileOutputStream(FileDescriptor.out), true, StandardCharsets.UTF_8);
+        // Salida estándar en UTF-8 para que "Línea" se vea igual en cualquier consola.
+        PrintStream out = crearSalida();
 
         if (args.length != 1) {
             out.println("Uso: desensamblador.sh <archivo.hack>");
@@ -44,6 +49,7 @@ public final class Main {
             return;
         }
 
+        // Solo se escribe si no hubo errores.
         StringBuilder sb = new StringBuilder(codigo.size() * 12);
         for (String linea : codigo) {
             sb.append(linea).append(SALTO);
@@ -56,6 +62,17 @@ public final class Main {
         }
     }
 
+    /** Salida estándar en UTF-8 (Java 8 o superior): no cerrar, es la salida del proceso. */
+    @SuppressWarnings("resource")
+    private static PrintStream crearSalida() {
+        try {
+            return new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return System.out;   // UTF-8 siempre existe; no debería ocurrir
+        }
+    }
+
+    /** Prog.hack -> ProgDis.asm en la misma carpeta (resolveSibling maneja rutas con espacios). */
     static Path nombreSalida(Path entrada) {
         String nombre = entrada.getFileName().toString();
         int punto = nombre.lastIndexOf('.');
@@ -63,6 +80,12 @@ public final class Main {
         return entrada.resolveSibling(base + "Dis.asm");
     }
 
+    /**
+     * Lee los bytes, los decodifica como ISO-8859-1 (nunca falla; un byte = un carácter),
+     * separa por '\n', quita UN '\r' final por línea (CRLF) y descarta el elemento vacío
+     * que deja el salto de línea final (que es opcional). NO se recorta nada más: un espacio
+     * al final o una línea vacía en medio deben dar error de longitud.
+     */
     static List<String> leerLineas(Path ruta) throws IOException {
         String texto = new String(Files.readAllBytes(ruta), StandardCharsets.ISO_8859_1);
         List<String> lineas = new ArrayList<>(Arrays.asList(texto.split("\n", -1)));
