@@ -1,0 +1,17 @@
+(L0)
+@L0
+D;JEQ
+@L2
+0;JMP
+@L1
+D;JLT
+@L0
+0;JMP
+(L1)
+@1000
+0;JMP
+@5
+D=A
+D;JNE
+@3
+(L2)

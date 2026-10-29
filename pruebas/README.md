@@ -1,0 +1,110 @@
+# Pruebas
+
+Programas de prueba y resultado esperado de cada caso. Todos los comandos se ejecutan desde la carpeta `proyecto3/`.
+
+## Cómo ejecutarlas
+
+```bash
+./compilar.sh
+
+# Ensamblador: genera pruebas/ensamblador/Prog.hack junto a cada Prog.asm
+for f in pruebas/ensamblador/*.asm; do ./ensamblador.sh "$f"; done
+
+# Desensamblador: genera pruebas/desensamblador/ProgDis.asm junto a cada Prog.hack
+for f in pruebas/desensamblador/*.hack; do ./desensamblador.sh "$f"; done
+
+# Casos de error: cada uno debe imprimir una línea ERROR *** Línea N: ..., terminar con código 1
+# y NO crear el archivo de salida
+for f in pruebas/errores/ens_*.asm;  do ./ensamblador.sh "$f";    echo "  -> código $?"; done
+for f in pruebas/errores/des_*.hack; do ./desensamblador.sh "$f"; echo "  -> código $?"; done
+```
+
+**Ensamblador:** el resultado esperado de `Prog.asm` es el `Prog.hack` que ya está en la carpeta. Al ejecutar, el programa lo reescribe con el mismo contenido, así que `git status` no debe mostrar cambios en `pruebas/ensamblador/`. Los `.hack` esperados tienen fin de línea CRLF, como los que genera el ensamblador oficial en Windows.
+
+**Desensamblador:** el resultado esperado de `Prog.hack` es `ProgDis_ejemplo.asm`. Los nombres de las etiquetas pueden variar entre soluciones, por eso la condición de corrección es que al ensamblar `ProgDis.asm` se obtenga de nuevo `Prog.hack`. Los `ProgDis.asm` generados no se versionan (están en `.gitignore`).
+
+**Errores:** el texto del mensaje es libre; lo que se comprueba es el formato `ERROR *** Línea N: <mensaje>`, que `N` sea correcto (contando desde 1, con comentarios y líneas en blanco), el código de salida distinto de 0 (aquí 1) y que no se genere el archivo de salida.
+
+## Ensamblador: programas válidos
+
+| Archivo | Qué prueba | Resultado esperado |
+|---|---|---|
+| `Prueba1.asm` | Material del profesor: programa sin símbolos (RAM[2] = RAM[0] + RAM[1]) | `Prueba1.hack` (8 instrucciones) |
+| `Prueba2.asm` | Material del profesor: etiquetas y variables (R1 = 1 + 2 + … + R0) | `Prueba2.hack` (24 instrucciones) |
+| `Producto.asm` | R2 = R0 × R1 por sumas repetidas: variable (`contador` → 16), etiqueta usada antes de declararse (`FIN`), comentarios, archivo sin salto de línea final | `Producto.hack` (20 instrucciones) |
+| `Instrucciones.asm` | Los 28 cómputos, los 8 destinos (incluido el vacío), los 8 saltos (incluido el vacío) y combinaciones de los tres | `Instrucciones.hack` (50 instrucciones) |
+| `Sintaxis.asm` | Fin de línea CRLF, tabulaciones, espacios dentro de la instrucción (`A  =  D  +  1  ;  JNE`), comentarios en línea propia y al final, símbolos predefinidos, `@32767`, símbolos con `. $ : _`, `R16` y `r0` (no son predefinidos: son variables), dos etiquetas en la misma dirección, etiqueta al final del archivo | `Sintaxis.hack` (25 instrucciones) |
+
+## Desensamblador: programas válidos
+
+| Archivo | Qué prueba | Resultado esperado |
+|---|---|---|
+| `Prueba3.hack` | Material del profesor: R2 = max(R0, R1) (16 instrucciones) | `Prueba3Dis_ejemplo.asm` (3 etiquetas) |
+| `Prueba4.hack` | Material del profesor: pinta R0 palabras de la pantalla (19 instrucciones) | `Prueba4Dis_ejemplo.asm` (2 etiquetas) |
+| `Etiquetas.hack` | Reglas de la sección 9.1 (14 instrucciones, fin de línea CRLF): dos saltos a la misma dirección usan una única etiqueta; destino `v = n` (etiqueta al final); destino en la primera instrucción; `@1000` antes de un salto con `v > n` queda en decimal; un `@5` que no precede a un salto queda en decimal; un salto precedido por una instrucción C no genera etiqueta; el archivo termina en una A | `EtiquetasDis_ejemplo.asm` (3 etiquetas) |
+| `Codigos.hack` | Binario de `Instrucciones.asm`: los 28 códigos de cómputo, 8 destinos y 8 saltos (50 instrucciones) | `CodigosDis_ejemplo.asm` (0 etiquetas) |
+| `Teclado.hack` | Programa con variables, `SCREEN`, `KBD` y `A=M` (33 instrucciones, sin salto de línea final) | `TecladoDis_ejemplo.asm` (4 etiquetas) |
+
+## Errores del ensamblador (sección 10.1)
+
+Los casos 01 a 30 tienen la forma: línea 1 comentario, línea 2 en blanco, línea 3 `D=M`, **línea 4 inválida**, línea 5 `D=M`.
+
+| Archivo | Categoría | Línea inválida | Línea esperada | Mensaje |
+|---|---|---|---|---|
+| `ens_01_A_sin_valor.asm` | Instrucción A | `@` | 4 | ERROR *** Línea 4: instrucción A sin valor |
+| `ens_02_A_fuera_de_rango.asm` | Instrucción A | `@32768` | 4 | ERROR *** Línea 4: constante fuera de rango (0..32767): '@32768' |
+| `ens_03_A_negativo.asm` | Instrucción A | `@-1` | 4 | ERROR *** Línea 4: símbolo inválido '@-1' |
+| `ens_04_A_empieza_con_digito.asm` | Instrucción A | `@1abc` | 4 | ERROR *** Línea 4: constante inválida '@1abc' |
+| `ens_05_A_caracter_invalido.asm` | Instrucción A | `@VAR#1` | 4 | ERROR *** Línea 4: símbolo inválido '@VAR#1' |
+| `ens_06_A_parentesis.asm` | Instrucción A | `@LOOP)` | 4 | ERROR *** Línea 4: símbolo inválido '@LOOP)' |
+| `ens_07_ETIQ_sin_cierre.asm` | Etiquetas | `(LOOP` | 4 | ERROR *** Línea 4: etiqueta sin cierre ')' |
+| `ens_08_ETIQ_sin_apertura.asm` | Etiquetas | `LOOP)` | 4 | ERROR *** Línea 4: etiqueta sin apertura '(' |
+| `ens_09_ETIQ_vacia.asm` | Etiquetas | `()` | 4 | ERROR *** Línea 4: etiqueta vacía '()' |
+| `ens_10_ETIQ_nombre_invalido.asm` | Etiquetas | `(1LOOP)` | 4 | ERROR *** Línea 4: nombre de etiqueta inválido '1LOOP' |
+| `ens_11_ETIQ_predefinido.asm` | Etiquetas | `(SCREEN)` | 4 | ERROR *** Línea 4: la etiqueta 'SCREEN' usa el nombre de un símbolo predefinido |
+| `ens_12_ETIQ_predefinido_R0.asm` | Etiquetas | `(R0)` | 4 | ERROR *** Línea 4: la etiqueta 'R0' usa el nombre de un símbolo predefinido |
+| `ens_13_DEST_desconocido.asm` | Destino | `X=D` | 4 | ERROR *** Línea 4: destino inválido 'X' |
+| `ens_14_DEST_DM.asm` | Destino | `DM=D+1` | 4 | ERROR *** Línea 4: destino inválido 'DM' |
+| `ens_15_DEST_ADM.asm` | Destino | `ADM=M` | 4 | ERROR *** Línea 4: destino inválido 'ADM' |
+| `ens_16_DEST_MA.asm` | Destino | `MA=1` | 4 | ERROR *** Línea 4: destino inválido 'MA' |
+| `ens_17_DEST_MM.asm` | Destino | `MM=0` | 4 | ERROR *** Línea 4: destino inválido 'MM' |
+| `ens_18_DEST_vacio.asm` | Destino | `=D` | 4 | ERROR *** Línea 4: destino vacío antes de '=' |
+| `ens_19_COMP_vacio_dest.asm` | Cómputo | `D=` | 4 | ERROR *** Línea 4: cómputo vacío |
+| `ens_20_COMP_vacio_salto.asm` | Cómputo | `;JMP` | 4 | ERROR *** Línea 4: cómputo vacío |
+| `ens_21_COMP_multiplicacion.asm` | Cómputo | `D=D*A` | 4 | ERROR *** Línea 4: cómputo inválido 'D*A' |
+| `ens_22_COMP_DmasA_orden.asm` | Cómputo | `D=A+D` | 4 | ERROR *** Línea 4: cómputo inválido 'A+D' |
+| `ens_23_COMP_MmasD.asm` | Cómputo | `M=M+D` | 4 | ERROR *** Línea 4: cómputo inválido 'M+D' |
+| `ens_24_COMP_MmasM.asm` | Cómputo | `D=M+M` | 4 | ERROR *** Línea 4: cómputo inválido 'M+M' |
+| `ens_25_SALTO_vacio.asm` | Salto | `D;` | 4 | ERROR *** Línea 4: salto vacío después de ';' |
+| `ens_26_SALTO_JXX.asm` | Salto | `D;JXX` | 4 | ERROR *** Línea 4: salto inválido 'JXX' |
+| `ens_27_SALTO_minusculas.asm` | Salto | `0;jmp` | 4 | ERROR *** Línea 4: salto inválido 'jmp' |
+| `ens_28_ESTR_dos_iguales.asm` | Estructura | `D=M=A` | 4 | ERROR *** Línea 4: más de un '=' en la instrucción |
+| `ens_29_ESTR_dos_puntoycoma.asm` | Estructura | `D;JGT;JMP` | 4 | ERROR *** Línea 4: más de un ';' en la instrucción |
+| `ens_30_ESTR_texto.asm` | Estructura | `HOLA MUNDO` | 4 | ERROR *** Línea 4: cómputo inválido 'HOLAMUNDO' |
+| `ens_31_ETIQ_duplicada.asm` | Etiquetas | etiqueta declarada dos veces: se reporta la 2.ª declaración | 4 | ERROR *** Línea 4: etiqueta 'LOOP' declarada más de una vez |
+| `ens_32_PRIMER_ERROR.asm` | Orden | dos errores (destino en la línea 3, etiqueta repetida en la 6): se reporta el primero | 3 | ERROR *** Línea 3: destino inválido 'X' |
+| `ens_33_FIN_CRLF.asm` | Fin de línea | archivo con CRLF: la numeración de líneas no cambia | 4 | ERROR *** Línea 4: destino inválido 'DM' |
+| `ens_34_ESPACIOS_Y_COMENTARIO.asm` | Estructura | error en una línea con espacios, tabulaciones y comentario | 4 | ERROR *** Línea 4: salto inválido 'JXX' |
+
+## Errores del desensamblador (sección 10.2)
+
+Los casos 01 a 10 tienen la forma: líneas 1 y 2 válidas, **línea 3 inválida**, línea 4 válida.
+
+| Archivo | Categoría | Línea inválida | Línea esperada | Mensaje |
+|---|---|---|---|---|
+| `des_01_LONG_15.hack` | Longitud | `000000000000000` | 3 | ERROR *** Línea 3: longitud inválida: 15 caracteres (se esperaban 16) |
+| `des_02_LONG_17.hack` | Longitud | `00000000000000000` | 3 | ERROR *** Línea 3: longitud inválida: 17 caracteres (se esperaban 16) |
+| `des_03_LONG_espacio_final.hack` | Longitud | `1111110000010000` + un espacio al final | 3 | ERROR *** Línea 3: longitud inválida: 17 caracteres (se esperaban 16) |
+| `des_04_LONG_vacia_en_medio.hack` | Longitud | (línea vacía) | 3 | ERROR *** Línea 3: longitud inválida: 0 caracteres (se esperaban 16) |
+| `des_05_CAR_dos.hack` | Caracteres | `0000000000000201` | 3 | ERROR *** Línea 3: carácter inválido '2' en la posición 14 (solo 0 y 1) |
+| `des_06_CAR_letra.hack` | Caracteres | `000000000000000a` | 3 | ERROR *** Línea 3: carácter inválido 'a' en la posición 16 (solo 0 y 1) |
+| `des_07_BITS_10.hack` | Bits 14–13 | `1010110000010000` | 3 | ERROR *** Línea 3: instrucción C con bits 14-13 distintos de 11 |
+| `des_08_BITS_01.hack` | Bits 14–13 | `1011110000010000` | 3 | ERROR *** Línea 3: instrucción C con bits 14-13 distintos de 11 |
+| `des_09_COMP_a0.hack` | Cómputo | `1110000001010000` | 3 | ERROR *** Línea 3: cómputo inválido (a c1..c6 = 0000001) |
+| `des_10_COMP_a1.hack` | Cómputo | `1111111111010000` | 3 | ERROR *** Línea 3: cómputo inválido (a c1..c6 = 1111111) |
+| `des_11_PRIMER_ERROR.hack` | Orden | dos errores (líneas 3 y 4): se reporta el primero | 3 | ERROR *** Línea 3: instrucción C con bits 14-13 distintos de 11 |
+| `des_12_FIN_CRLF.hack` | Fin de línea | archivo con CRLF: la numeración no cambia | 3 | ERROR *** Línea 3: instrucción C con bits 14-13 distintos de 11 |
+
+## Pruebas con los programas oficiales
+
+Además de esta carpeta, se prueban a mano los programas de `projects/6` de Nand2Tetris (`Add`, `Max`, `MaxL`, `Rect`, `RectL`, `Pong`, `PongL`): se ensambla cada `.asm`, se compara con la salida de `tools/Assembler.bat` usando `tools/TextComparer.bat`, y se comprueba la condición de corrección del desensamblador (desensamblar, volver a ensamblar y comparar con el `.hack` original).
