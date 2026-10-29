@@ -1,55 +1,52 @@
 # Pruebas
 
-Programas de prueba y resultado esperado de cada caso. Todos los comandos se ejecutan desde la carpeta `proyecto3/`.
-
-## Cómo ejecutarlas
+## Como ejecutarlas
 
 ```bash
 ./compilar.sh
 
-# Ensamblador: genera pruebas/ensamblador/Prog.hack junto a cada Prog.asm
+# Ensamblador: genera a los prog.hack y prog.asm
 for f in pruebas/ensamblador/*.asm; do ./ensamblador.sh "$f"; done
 
-# Desensamblador: genera pruebas/desensamblador/ProgDis.asm junto a cada Prog.hack
+# Desensamblador:  genera los progDisasm junto a los prog hack
 for f in pruebas/desensamblador/*.hack; do ./desensamblador.sh "$f"; done
 
-# Casos de error: cada uno debe imprimir una línea ERROR *** Línea N: ..., terminar con código 1
-# y NO crear el archivo de salida
+# Casos de error
 for f in pruebas/errores/ens_*.asm;  do ./ensamblador.sh "$f";    echo "  -> código $?"; done
 for f in pruebas/errores/des_*.hack; do ./desensamblador.sh "$f"; echo "  -> código $?"; done
 ```
 
-**Ensamblador:** el resultado esperado de `Prog.asm` es el `Prog.hack` que ya está en la carpeta. Al ejecutar, el programa lo reescribe con el mismo contenido, así que `git status` no debe mostrar cambios en `pruebas/ensamblador/`. Los `.hack` esperados tienen fin de línea CRLF, como los que genera el ensamblador oficial en Windows.
+**Ensamblador:** el resultado de Prog.asm es el Prog.hack de la carpeta. Al ejecutarse , el programa lo reescribe con el mismo contenido del archivo, así que git status no debe mostrar cambios en pruebas/ensamblador/.
 
-**Desensamblador:** el resultado esperado de `Prog.hack` es `ProgDis_ejemplo.asm`. Los nombres de las etiquetas pueden variar entre soluciones, por eso la condición de corrección es que al ensamblar `ProgDis.asm` se obtenga de nuevo `Prog.hack`. Los `ProgDis.asm` generados no se versionan (están en `.gitignore`).
+**Desensamblador:** el resultado de Prog.hack es ProgDis_ejemplo.asm. Los nombres de las etiquetas pueden variar dependiendo del proceso, por eso la condición de correccion es que al ensamblar ProgDis.asm se obtiene de nuevo Prog.hack. Y los ProgDis.asm son ignorados por el gitignore
 
-**Errores:** el texto del mensaje es libre; lo que se comprueba es el formato `ERROR *** Línea N: <mensaje>`, que `N` sea correcto (contando desde 1, con comentarios y líneas en blanco), el código de salida distinto de 0 (aquí 1) y que no se genere el archivo de salida.
+**Errores:** el texto del mensaje es libre; lo que se comprueba es el formato `ERROR *** Línea N: <mensaje>`, que `N` sea correcto (contando desde 1), el código de salida distinto de 0 (aqui 1) y que no se genere algun archivo de salida.
 
-## Ensamblador: programas válidos
+## Ensamblador: programas válidos definidos
 
-| Archivo | Qué prueba | Resultado esperado |
+| Archivo | Que prueba | Resultado esperado |
 |---|---|---|
-| `Prueba1.asm` | Material del profesor: programa sin símbolos (RAM[2] = RAM[0] + RAM[1]) | `Prueba1.hack` (8 instrucciones) |
-| `Prueba2.asm` | Material del profesor: etiquetas y variables (R1 = 1 + 2 + … + R0) | `Prueba2.hack` (24 instrucciones) |
-| `Producto.asm` | R2 = R0 × R1 por sumas repetidas: variable (`contador` → 16), etiqueta usada antes de declararse (`FIN`), comentarios, archivo sin salto de línea final | `Producto.hack` (20 instrucciones) |
-| `Instrucciones.asm` | Los 28 cómputos, los 8 destinos (incluido el vacío), los 8 saltos (incluido el vacío) y combinaciones de los tres | `Instrucciones.hack` (50 instrucciones) |
-| `Sintaxis.asm` | Fin de línea CRLF, tabulaciones, espacios dentro de la instrucción (`A  =  D  +  1  ;  JNE`), comentarios en línea propia y al final, símbolos predefinidos, `@32767`, símbolos con `. $ : _`, `R16` y `r0` (no son predefinidos: son variables), dos etiquetas en la misma dirección, etiqueta al final del archivo | `Sintaxis.hack` (25 instrucciones) |
+| Prueba1.asm | Programas prueba: programa sin simbolos (RAM[2] = RAM[0] + RAM[1]) | Prueba1.hack (8 instrucciones) |
+| Prueba2.asm | Programas prueba: etiquetas y variables (R1 = 1 + 2 + … + R0) | Prueba2.hack (24 instrucciones) |
+| Producto.asm | R2 = R0 × R1 por sumas repetidas: variable (`contador` → 16), etiqueta usada antes de declararse (FIN), comentarios, archivo sin salto de línea final | Producto.hack (20 instrucciones) |
+| Instrucciones.asm | Los 28 computos, los 8 destinos, los 8 saltos y las combinaciones de los tres | Instrucciones.hack (50 instrucciones) |
+| Sintaxis.asm | Fin de línea CRLF, tabulaciones, espacios dentro de la instrucción (A  =  D  +  1  ;  JNE), comentarios en línea propia y al final, símbolos predefinidos, @32767, símbolos con . $ : _, R16 y r0 (no son predefinidos: son variables), dos etiquetas en la misma dirección, etiqueta al final del archivo | Sintaxis.hack (25 instrucciones) |
 
 ## Desensamblador: programas válidos
 
 | Archivo | Qué prueba | Resultado esperado |
 |---|---|---|
-| `Prueba3.hack` | Material del profesor: R2 = max(R0, R1) (16 instrucciones) | `Prueba3Dis_ejemplo.asm` (3 etiquetas) |
-| `Prueba4.hack` | Material del profesor: pinta R0 palabras de la pantalla (19 instrucciones) | `Prueba4Dis_ejemplo.asm` (2 etiquetas) |
-| `Etiquetas.hack` | Reglas de la sección 9.1 (14 instrucciones, fin de línea CRLF): dos saltos a la misma dirección usan una única etiqueta; destino `v = n` (etiqueta al final); destino en la primera instrucción; `@1000` antes de un salto con `v > n` queda en decimal; un `@5` que no precede a un salto queda en decimal; un salto precedido por una instrucción C no genera etiqueta; el archivo termina en una A | `EtiquetasDis_ejemplo.asm` (3 etiquetas) |
-| `Codigos.hack` | Binario de `Instrucciones.asm`: los 28 códigos de cómputo, 8 destinos y 8 saltos (50 instrucciones) | `CodigosDis_ejemplo.asm` (0 etiquetas) |
-| `Teclado.hack` | Programa con variables, `SCREEN`, `KBD` y `A=M` (33 instrucciones, sin salto de línea final) | `TecladoDis_ejemplo.asm` (4 etiquetas) |
+| Prueba3.hack | Programas de prueba: R2 = max(R0, R1) (16 instrucciones) | Prueba3Dis_ejemplo.asm (3 etiquetas) |
+| Prueba4.hack | Programas de prueba: pinta R0 palabras de la pantalla (19 instrucciones) | Prueba4Dis_ejemplo.asm (2 etiquetas) |
+| Etiquetas.hack` | 14 instrucciones, fin de línea CRLF: dos saltos a la misma dirección usan una única etiqueta; destino v = n (etiqueta al final); destino en la primera instrucción;@1000 antes de un salto con v > n queda en decimal; un @5 que no precede a un salto queda en decimal; un salto precedido por una instrucción C no genera etiqueta; el archivo termina en una A | EtiquetasDis_ejemplo.asm (3 etiquetas) |
+| Codigos.hack | Binario de Instrucciones.asm: los 28 códigos de computo, 8 destinos y 8 saltos (50 instrucciones) | CodigosDis_ejemplo.asm (0 etiquetas) |
+| Teclado.hack | Programa con variables, SCREEN, KBD y A=M (33 instrucciones, sin salto de línea final) | TecladoDis_ejemplo.asm (4 etiquetas) |
 
-## Errores del ensamblador (sección 10.1)
+## Errores del ensamblador
 
-Los casos 01 a 30 tienen la forma: línea 1 comentario, línea 2 en blanco, línea 3 `D=M`, **línea 4 inválida**, línea 5 `D=M`.
+Los casos del 1 a 30 tienen la forma: linea 1 comentario, linea 2 en blanco, línea 3 D=M, linea 4 inválida, línea 5 D=M.
 
-| Archivo | Categoría | Línea inválida | Línea esperada | Mensaje |
+| Archivo | Categoria | Linea inválida | Linea esperada | Mensaje |
 |---|---|---|---|---|
 | `ens_01_A_sin_valor.asm` | Instrucción A | `@` | 4 | ERROR *** Línea 4: instrucción A sin valor |
 | `ens_02_A_fuera_de_rango.asm` | Instrucción A | `@32768` | 4 | ERROR *** Línea 4: constante fuera de rango (0..32767): '@32768' |
