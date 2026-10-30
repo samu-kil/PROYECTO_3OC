@@ -6,11 +6,11 @@ import java.util.List;
 public final class Ensamblador {
     private Ensamblador() {}
  
-
+/** ensamblador de dos pasadas*/
     public static List<String> ensamblar(List<String> lineas) {
         TablaSimbolos tabla = new TablaSimbolos();
         List<Instruccion> programa = new ArrayList<>();
- 
+ // Pasada 1: registra las etiquetas y guarda las instrucciones ya estructuradas.
 
         for (int i = 0; i < lineas.size(); i++) {
             int nLinea = i + 1;
@@ -25,7 +25,7 @@ public final class Ensamblador {
                 programa.add(Analizador.analizar(limpia, nLinea));
             }
         }
- 
+ // Pasada 2: resuelve simbolos y codifica.
         List<String> salida = new ArrayList<>(programa.size());
         for (Instruccion ins : programa) {
             salida.add(codificar(ins, tabla));
