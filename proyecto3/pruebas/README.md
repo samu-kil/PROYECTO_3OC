@@ -22,7 +22,7 @@ for f in pruebas/errores/des_*.hack; do ./desensamblador.sh "$f"; echo "  -> có
 
 **Errores:** el texto del mensaje es libre; lo que se comprueba es el formato ERROR *** Linea N: <mensaje>, que N sea correcto (contando desde 1), el código de salida distinto de 0 (aqui 1) y que no se genere algun archivo de salida.
 
-## Ensamblador: programas válidos definidos
+## Ensamblador: programas validos definidos
 
 | Archivo | Que prueba | Resultado |
 |---|---|---|
@@ -46,7 +46,7 @@ for f in pruebas/errores/des_*.hack; do ./desensamblador.sh "$f"; echo "  -> có
 
 Los casos del 1 a 30 tienen la forma: linea 1 comentario, linea 2 en blanco, línea 3 D=M, linea 4 inválida, línea 5 D=M.
 
-| Archivo | Categoria | Linea inválida | Linea esperada | Mensaje |
+| Archivo | Categoria | Linea invalida | Linea esperada | Mensaje |
 |---|---|---|---|---|
 | ens_01_A_sin_valor.asm | Instrucción A | @ | 4 | ERROR *** Línea 4: instruccion A sin valor |
 | ens_02_A_fuera_de_rango.asm | Instrucción A | @32768 | 4 | ERROR *** Linea 4: constante fuera de rango (0..32767): @32768 |
@@ -77,7 +77,7 @@ Los casos del 1 a 30 tienen la forma: linea 1 comentario, linea 2 en blanco, lí
 | ens_27_SALTO_minusculas.asm | Salto | 0;jmp | 4 | ERROR *** Linea 4: salto invalido jmp |
 | ens_28_ESTR_dos_iguales.asm | Estructura | D=M=A| 4 | ERROR *** Linea 4: mas de un = en la instruccion |
 | ens_29_ESTR_dos_puntoycoma.asm | Estructura | D;JGT;JMP | 4 | ERROR *** Linea 4: mas de un ; en la instruccion |
-| ens_30_ESTR_texto.asm | Estructura | `HOLA MUNDO` | 4 | ERROR *** Línea 4: cómputo inválido HOLAMUNDO |
+| ens_30_ESTR_texto.asm | Estructura | HOLA MUNDO | 4 | ERROR *** Línea 4: cómputo inválido HOLAMUNDO |
 | ens_31_ETIQ_duplicada.asm | Etiquetas | etiqueta declarada dos veces: se reporta la 2.ª declaración | 4 | ERROR *** Linea 4: etiqueta LOOP declarada mas de una vez |
 | ens_32_PRIMER_ERROR.asm | Orden | dos errores y se reporta el primero | 3 | ERROR *** Linea 3: destino invalido X|
 | ens_33_FIN_CRLF.asm | Fin de la linea | archivo con CRLF: la numeración de líneas no cambia | 4 | ERROR *** Linea 4: destino inválido DM|
@@ -85,7 +85,7 @@ Los casos del 1 a 30 tienen la forma: linea 1 comentario, linea 2 en blanco, lí
 
 ## Errores del desensamblador
 
-Los casos del 1 a 10 tienen la forma: lineas 1 y 2 validas, **linea 3 inválida**, línea 4 valida.
+Los casos del 1 a 10 tienen la forma: lineas 1 y 2 validas, linea 3 inválida, línea 4 valida.
 
 | Archivo | Categoria | Línea invalida | Linea esperada | Mensaje |
 |---|---|---|---|---|
