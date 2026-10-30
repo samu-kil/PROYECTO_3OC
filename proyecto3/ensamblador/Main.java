@@ -20,9 +20,9 @@ public final class Main {
     /** Separador de línea de la salida. Si el oficial en Windows genera CRLF, esto lo imita. */
     private static final String SALTO = System.lineSeparator();
 
-    @SuppressWarnings("resource") // "out" envuelve la salida estándar: no se debe cerrar
+    @SuppressWarnings("resource") // "out" envuelve la salida estándar
     public static void main(String[] args) {
-        // Salida estándar en UTF-8 para que "Línea" se vea igual en cualquier consola.
+        // Salida estándar en UTF-8.
         PrintStream out = crearSalida();
 
         if (args.length != 1) {
