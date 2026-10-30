@@ -17,7 +17,7 @@ import java.util.List;
 public final class Main {
     private Main() {}
 
-    /** Separador de línea de la salida. Si el oficial en Windows genera CRLF, esto lo imita. */
+    /** Separador de linea de la salida */
     private static final String SALTO = System.lineSeparator();
 
     @SuppressWarnings("resource") // "out" envuelve la salida estándar
@@ -62,17 +62,17 @@ public final class Main {
         }
     }
 
-    /** Salida estándar en UTF-8 (Java 8 o superior): no cerrar, es la salida del proceso. */
+    /** Salida estándar en UTF-8 (Java 8 o superior) */
     @SuppressWarnings("resource")
     private static PrintStream crearSalida() {
         try {
             return new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            return System.out;   // UTF-8 siempre existe; no debería ocurrir
+            return System.out;   
         }
     }
 
-    /** Prog.asm -> Prog.hack en la misma carpeta (resolveSibling maneja rutas con espacios). */
+    /** Prog.asm -> Prog.hack en la misma carpeta */
     static Path nombreSalida(Path entrada) {
         String nombre = entrada.getFileName().toString();
         int punto = nombre.lastIndexOf('.');
@@ -83,7 +83,6 @@ public final class Main {
     /**
      * Lee los bytes, los decodifica como ISO-8859-1 (nunca falla; un byte = un carácter),
      * separa por '\n', quita UN '\r' final por línea (CRLF) y descarta el elemento vacío
-     * que deja el salto de línea final.
      */
     static List<String> leerLineas(Path ruta) throws IOException {
         String texto = new String(Files.readAllBytes(ruta), StandardCharsets.ISO_8859_1);
