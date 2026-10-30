@@ -24,17 +24,17 @@ for f in pruebas/errores/des_*.hack; do ./desensamblador.sh "$f"; echo "  -> có
 
 ## Ensamblador: programas válidos definidos
 
-| Archivo | Que prueba | Resultado esperado |
+| Archivo | Que prueba | Resultado |
 |---|---|---|
 | Prueba1.asm | Programas prueba: programa sin simbolos (RAM[2] = RAM[0] + RAM[1]) | Prueba1.hack (8 instrucciones) |
 | Prueba2.asm | Programas prueba: etiquetas y variables (R1 = 1 + 2 + … + R0) | Prueba2.hack (24 instrucciones) |
-| Producto.asm | R2 = R0 × R1 por sumas repetidas: variable (`contador` → 16), etiqueta usada antes de declararse (FIN), comentarios, archivo sin salto de línea final | Producto.hack (20 instrucciones) |
+| Producto.asm | R2 = R0 × R1 por sumas repetidas: variable (contador → 16), etiqueta usada antes de declararse (FIN), comentarios, archivo sin salto de línea final | Producto.hack (20 instrucciones) |
 | Instrucciones.asm | Los 28 computos, los 8 destinos, los 8 saltos y las combinaciones de los tres | Instrucciones.hack (50 instrucciones) |
 | Sintaxis.asm | Fin de línea CRLF, tabulaciones, espacios dentro de la instrucción (A  =  D  +  1  ;  JNE), comentarios en línea propia y al final, símbolos predefinidos, @32767, símbolos con . $ : _, R16 y r0 (no son predefinidos: son variables), dos etiquetas en la misma dirección, etiqueta al final del archivo | Sintaxis.hack (25 instrucciones) |
 
 ## Desensamblador: programas válidos
 
-| Archivo | Qué prueba | Resultado esperado |
+| Archivo | Qué prueba | Resultado |
 |---|---|---|
 | Prueba3.hack | Programas de prueba: R2 = max(R0, R1) (16 instrucciones) | Prueba3Dis_ejemplo.asm (3 etiquetas) |
 | Prueba4.hack | Programas de prueba: pinta R0 palabras de la pantalla (19 instrucciones) | Prueba4Dis_ejemplo.asm (2 etiquetas) |
@@ -89,15 +89,15 @@ Los casos del 1 a 10 tienen la forma: lineas 1 y 2 validas, **linea 3 inválida*
 
 | Archivo | Categoria | Línea invalida | Linea esperada | Mensaje |
 |---|---|---|---|---|
-| des_01_LONG_15.hack | Longitud | 000000000000000 | 3 | ERROR *** Linea 3: longitud inválida: 15 caracteres (se esperaban 16) |
-| des_02_LONG_17.hack | Longitud | 00000000000000000 | 3 | ERROR *** Linea 3: longitud inválida: 17 caracteres (se esperaban 16) |
+| des_01_LONG_15.hack | Longitud | 000000000000000 | 3 | ERROR *** Linea 3: longitud invalida: 15 caracteres (se esperaban 16) |
+| des_02_LONG_17.hack | Longitud | 00000000000000000 | 3 | ERROR *** Linea 3: longitud invalida: 17 caracteres (se esperaban 16) |
 | des_03_LONG_espacio_final.hack | Longitud | 1111110000010000 + un espacio al final | 3 | ERROR *** Linea 3: longitud invalida: 17 caracteres |
-| des_04_LONG_vacia_en_medio.hack | Longitud | (línea vacía) | 3 | ERROR *** Línea 3: longitud invalida: 0 caracteres |
+| des_04_LONG_vacia_en_medio.hack | Longitud | (línea vacía) | 3 | ERROR *** Linea 3: longitud invalida: 0 caracteres |
 | des_05_CAR_dos.hack | Caracteres | 0000000000000200 | 3 | ERROR *** Linea 3: caracter invalido 2 en la posicion 14  |
 | des_06_CAR_letra.hack | Caracteres | 000000000000000a | 3 | ERROR *** Linea 3: caracter invalido a en la posicion 16  |
-| des_07_BITS_10.hack | Bits 14–13 | 1010110000010000 | 3 | ERROR *** Linea 3: instrucción C con bits 14-13 distintos de 11 |
-| des_08_BITS_01.hack | Bits 14–13 | 1011110000010000 | 3 | ERROR *** Linea 3: instrucción C con bits 14-13 distintos de 11 |
-| des_09_COMP_a0.hack | Cómputo | 1110000001010000 | 3 | ERROR *** Linea 3: cómputo inválido (a c1..c6 = 0000001) |
+| des_07_BITS_10.hack | Bits 14–13 | 1010110000010000 | 3 | ERROR *** Linea 3: instruccion C con bits 14-13 distintos de 11 |
+| des_08_BITS_01.hack | Bits 14–13 | 1011110000010000 | 3 | ERROR *** Linea 3: instruccion C con bits 14-13 distintos de 11 |
+| des_09_COMP_a0.hack | Cómputo | 1110000001010000 | 3 | ERROR *** Linea 3: cómputo invalido (a c1..c6 = 0000001) |
 | des_10_COMP_a1.hack | Cómputo | 1111111111010000 | 3 | ERROR *** Linea 3: cómputo inválido (a c1..c6 = 1111111) |
 |des_11_PRIMER_ERROR.hack | Orden | dos errores (líneas 3 y 4): se reporta el primero | 3 | ERROR *** Linea 3: instruccion C con bits 14-13 distintos de 11 |
 | des_12_FIN_CRLF.hack | Fin de línea | archivo con CRLF: la numeración no cambia | 3 | ERROR *** Linea 3: instruccion C con bits 14-13 distintos de 11 |
