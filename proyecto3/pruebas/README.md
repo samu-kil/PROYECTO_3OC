@@ -66,42 +66,39 @@ Los casos del 1 a 30 tienen la forma: linea 1 comentario, linea 2 en blanco, lí
 | `ens_16_DEST_MA.asm` | Destino | `MA=1` | 4 | ERROR *** Línea 4: destino inválido 'MA' |
 | `ens_17_DEST_MM.asm` | Destino | `MM=0` | 4 | ERROR *** Línea 4: destino inválido 'MM' |
 | `ens_18_DEST_vacio.asm` | Destino | `=D` | 4 | ERROR *** Línea 4: destino vacío antes de '=' |
-| `ens_19_COMP_vacio_dest.asm` | Cómputo | `D=` | 4 | ERROR *** Línea 4: cómputo vacío |
-| `ens_20_COMP_vacio_salto.asm` | Cómputo | `;JMP` | 4 | ERROR *** Línea 4: cómputo vacío |
-| `ens_21_COMP_multiplicacion.asm` | Cómputo | `D=D*A` | 4 | ERROR *** Línea 4: cómputo inválido 'D*A' |
-| `ens_22_COMP_DmasA_orden.asm` | Cómputo | `D=A+D` | 4 | ERROR *** Línea 4: cómputo inválido 'A+D' |
-| `ens_23_COMP_MmasD.asm` | Cómputo | `M=M+D` | 4 | ERROR *** Línea 4: cómputo inválido 'M+D' |
-| `ens_24_COMP_MmasM.asm` | Cómputo | `D=M+M` | 4 | ERROR *** Línea 4: cómputo inválido 'M+M' |
-| `ens_25_SALTO_vacio.asm` | Salto | `D;` | 4 | ERROR *** Línea 4: salto vacío después de ';' |
-| `ens_26_SALTO_JXX.asm` | Salto | `D;JXX` | 4 | ERROR *** Línea 4: salto inválido 'JXX' |
-| `ens_27_SALTO_minusculas.asm` | Salto | `0;jmp` | 4 | ERROR *** Línea 4: salto inválido 'jmp' |
-| `ens_28_ESTR_dos_iguales.asm` | Estructura | `D=M=A` | 4 | ERROR *** Línea 4: más de un '=' en la instrucción |
-| `ens_29_ESTR_dos_puntoycoma.asm` | Estructura | `D;JGT;JMP` | 4 | ERROR *** Línea 4: más de un ';' en la instrucción |
-| `ens_30_ESTR_texto.asm` | Estructura | `HOLA MUNDO` | 4 | ERROR *** Línea 4: cómputo inválido 'HOLAMUNDO' |
-| `ens_31_ETIQ_duplicada.asm` | Etiquetas | etiqueta declarada dos veces: se reporta la 2.ª declaración | 4 | ERROR *** Línea 4: etiqueta 'LOOP' declarada más de una vez |
-| `ens_32_PRIMER_ERROR.asm` | Orden | dos errores (destino en la línea 3, etiqueta repetida en la 6): se reporta el primero | 3 | ERROR *** Línea 3: destino inválido 'X' |
-| `ens_33_FIN_CRLF.asm` | Fin de línea | archivo con CRLF: la numeración de líneas no cambia | 4 | ERROR *** Línea 4: destino inválido 'DM' |
-| `ens_34_ESPACIOS_Y_COMENTARIO.asm` | Estructura | error en una línea con espacios, tabulaciones y comentario | 4 | ERROR *** Línea 4: salto inválido 'JXX' |
+| `ens_19_COMP_vacio_dest.asm` | Cómputo | `D=` | 4 | ERROR *** Linea 4: cómputo vacío |
+| `ens_20_COMP_vacio_salto.asm` | Cómputo | `;JMP` | 4 | ERROR *** Linea 4: cómputo vacío |
+| `ens_21_COMP_multiplicacion.asm` | Cómputo | `D=D*A` | 4 | ERROR *** Linea 4: cómputo inválido 'D*A' |
+| `ens_22_COMP_DmasA_orden.asm` | Cómputo | `D=A+D` | 4 | ERROR *** Linea 4: cómputo inválido 'A+D' |
+| `ens_23_COMP_MmasD.asm` | Cómputo | `M=M+D` | 4 | ERROR *** Linea 4: computo inválido 'M+D' |
+| `ens_24_COMP_MmasM.asm` | Cómputo | `D=M+M` | 4 | ERROR *** Linea 4: computo inválido 'M+M' |
+| `ens_25_SALTO_vacio.asm` | Salto | `D;` | 4 | ERROR *** Linea 4: salto vacío después de ';' |
+| ens_26_SALTO_JXX.asm | Salto | D;JXX | 4 | ERROR *** Linea 4: salto invalido JXX |
+| ens_27_SALTO_minusculas.asm | Salto | 0;jmp | 4 | ERROR *** Linea 4: salto invalido jmp |
+| ens_28_ESTR_dos_iguales.asm | Estructura | D=M=A| 4 | ERROR *** Linea 4: mas de un = en la instruccion |
+| ens_29_ESTR_dos_puntoycoma.asm | Estructura | D;JGT;JMP | 4 | ERROR *** Linea 4: mas de un ; en la instruccion |
+| ens_30_ESTR_texto.asm | Estructura | `HOLA MUNDO` | 4 | ERROR *** Línea 4: cómputo inválido 'HOLAMUNDO' |
+| ens_31_ETIQ_duplicada.asm | Etiquetas | etiqueta declarada dos veces: se reporta la 2.ª declaración | 4 | ERROR *** Linea 4: etiqueta 'LOOP' declarada mas de una vez |
+| ens_32_PRIMER_ERROR.asm | Orden | dos errores y se reporta el primero | 3 | ERROR *** Linea 3: destino invalido X|
+| ens_33_FIN_CRLF.asm | Fin de la linea | archivo con CRLF: la numeración de líneas no cambia | 4 | ERROR *** Linea 4: destino inválido DM|
+| ens_34_ESPACIOS_Y_COMENTARIO.asm | Estructura | error en una lnea con espacios, tabulaciones y comentario | 4 | ERROR *** Linea 4: salto inválido JXX |
 
-## Errores del desensamblador (sección 10.2)
+## Errores del desensamblador
 
-Los casos 01 a 10 tienen la forma: líneas 1 y 2 válidas, **línea 3 inválida**, línea 4 válida.
+Los casos del 1 a 10 tienen la forma: lineas 1 y 2 validas, **linea 3 inválida**, línea 4 valida.
 
-| Archivo | Categoría | Línea inválida | Línea esperada | Mensaje |
+| Archivo | Categoria | Línea invalida | Linea esperada | Mensaje |
 |---|---|---|---|---|
-| `des_01_LONG_15.hack` | Longitud | `000000000000000` | 3 | ERROR *** Línea 3: longitud inválida: 15 caracteres (se esperaban 16) |
-| `des_02_LONG_17.hack` | Longitud | `00000000000000000` | 3 | ERROR *** Línea 3: longitud inválida: 17 caracteres (se esperaban 16) |
-| `des_03_LONG_espacio_final.hack` | Longitud | `1111110000010000` + un espacio al final | 3 | ERROR *** Línea 3: longitud inválida: 17 caracteres (se esperaban 16) |
-| `des_04_LONG_vacia_en_medio.hack` | Longitud | (línea vacía) | 3 | ERROR *** Línea 3: longitud inválida: 0 caracteres (se esperaban 16) |
-| `des_05_CAR_dos.hack` | Caracteres | `0000000000000201` | 3 | ERROR *** Línea 3: carácter inválido '2' en la posición 14 (solo 0 y 1) |
-| `des_06_CAR_letra.hack` | Caracteres | `000000000000000a` | 3 | ERROR *** Línea 3: carácter inválido 'a' en la posición 16 (solo 0 y 1) |
-| `des_07_BITS_10.hack` | Bits 14–13 | `1010110000010000` | 3 | ERROR *** Línea 3: instrucción C con bits 14-13 distintos de 11 |
-| `des_08_BITS_01.hack` | Bits 14–13 | `1011110000010000` | 3 | ERROR *** Línea 3: instrucción C con bits 14-13 distintos de 11 |
-| `des_09_COMP_a0.hack` | Cómputo | `1110000001010000` | 3 | ERROR *** Línea 3: cómputo inválido (a c1..c6 = 0000001) |
-| `des_10_COMP_a1.hack` | Cómputo | `1111111111010000` | 3 | ERROR *** Línea 3: cómputo inválido (a c1..c6 = 1111111) |
-| `des_11_PRIMER_ERROR.hack` | Orden | dos errores (líneas 3 y 4): se reporta el primero | 3 | ERROR *** Línea 3: instrucción C con bits 14-13 distintos de 11 |
-| `des_12_FIN_CRLF.hack` | Fin de línea | archivo con CRLF: la numeración no cambia | 3 | ERROR *** Línea 3: instrucción C con bits 14-13 distintos de 11 |
+| `des_01_LONG_15.hack` | Longitud | `000000000000000` | 3 | ERROR *** Linea 3: longitud inválida: 15 caracteres (se esperaban 16) |
+| `des_02_LONG_17.hack` | Longitud | `00000000000000000` | 3 | ERROR *** Linea 3: longitud inválida: 17 caracteres (se esperaban 16) |
+| `des_03_LONG_espacio_final.hack` | Longitud | `1111110000010000` + un espacio al final | 3 | ERROR *** Línea 3: longitud inválida: 17 caracteres |
+| des_04_LONG_vacia_en_medio.hack | Longitud | (línea vacía) | 3 | ERROR *** Línea 3: longitud inválida: 0 caracteres |
+| des_05_CAR_dos.hack | Caracteres | 0000000000000200 | 3 | ERROR *** Linea 3: caracter invalido 2 en la posición 14  |
+| des_06_CAR_letra.hack | Caracteres | 000000000000000a | 3 | ERROR *** Linea 3: caracter invalido a en la posición 16  |
+| des_07_BITS_10.hack | Bits 14–13 | 1010110000010000 | 3 | ERROR *** Linea 3: instrucción C con bits 14-13 distintos de 11 |
+| des_08_BITS_01.hack | Bits 14–13 | 1011110000010000 | 3 | ERROR *** Linea 3: instrucción C con bits 14-13 distintos de 11 |
+| des_09_COMP_a0.hack | Cómputo | 1110000001010000 | 3 | ERROR *** Linea 3: cómputo inválido (a c1..c6 = 0000001) |
+| des_10_COMP_a1.hack | Cómputo | 1111111111010000 | 3 | ERROR *** Linea 3: cómputo inválido (a c1..c6 = 1111111) |
+|des_11_PRIMER_ERROR.hack | Orden | dos errores (líneas 3 y 4): se reporta el primero | 3 | ERROR *** Linea 3: instruccion C con bits 14-13 distintos de 11 |
+| des_12_FIN_CRLF.hack | Fin de línea | archivo con CRLF: la numeración no cambia | 3 | ERROR *** Linea 3: instruccion C con bits 14-13 distintos de 11 |
 
-## Pruebas con los programas oficiales
-
-Además de esta carpeta, se prueban a mano los programas de `projects/6` de Nand2Tetris (`Add`, `Max`, `MaxL`, `Rect`, `RectL`, `Pong`, `PongL`): se ensambla cada `.asm`, se compara con la salida de `tools/Assembler.bat` usando `tools/TextComparer.bat`, y se comprueba la condición de corrección del desensamblador (desensamblar, volver a ensamblar y comparar con el `.hack` original).
