@@ -7,8 +7,8 @@ se implemento un ensamblador (Prog.asm → Prog.hack) y un desensamblador (Prog.
 gran parte del proyecto se ejecuto en gitbash desde la carpeta de proyecto 3
 ### lenguaje
 el trabajo se realizo en java, JDK 8 o superior (el código se compila con --release 8), las clases corren en cualquier java 8
-java version: 1.8.0_511-b33
-javac version: 25.0.5
+### java version: 1.8.0_511-b33
+### version: 25.0.5
 ## Estructura del código
 
 ```
