@@ -49,18 +49,18 @@ Los casos del 1 a 30 tienen la forma: linea 1 comentario, linea 2 en blanco, lí
 | Archivo | Categoria | Linea inválida | Linea esperada | Mensaje |
 |---|---|---|---|---|
 | ens_01_A_sin_valor.asm | Instrucción A | @ | 4 | ERROR *** Línea 4: instruccion A sin valor |
-| ens_02_A_fuera_de_rango.asm | Instrucción A | @32768 | 4 | ERROR *** Linea 4: constante fuera de rango (0..32767): '@32768' |
-| ens_03_A_negativo.asm | Instrucción A | @-1 | 4 | ERROR *** Línea 4: simbolo invalido '@-1' |
+| ens_02_A_fuera_de_rango.asm | Instrucción A | @32768 | 4 | ERROR *** Linea 4: constante fuera de rango (0..32767): @32768 |
+| ens_03_A_negativo.asm | Instrucción A | @-1 | 4 | ERROR *** Línea 4: simbolo invalido @-1 |
 | ens_04_A_empieza_con_digito.asm | Instrucción A | @1abc | 4 | ERROR *** Linea 4: constante inválida @1abc |
 | ens_05_A_caracter_invalido.asm | Instrucción A | @VAR#1| 4 | ERROR *** Linea 4: simbolo inválido @VAR#1 |
 | ens_06_A_parentesis.asm | Instrucción A | @LOOP) | 4 | ERROR *** Línea 4: simbolo invalido @LOOP) |
 | ens_07_ETIQ_sin_cierre.asm | Etiquetas | (LOOP | 4 | ERROR *** Línea 4: etiqueta sin cierre ) |
 | ens_08_ETIQ_sin_apertura.asm | Etiquetas | LOOP) | 4 | ERROR *** Línea 4: etiqueta sin apertura ( |
 | ens_09_ETIQ_vacia.asm | Etiquetas | () | 4 | ERROR *** Línea 4: etiqueta vacía '()' |
-| ens_10_ETIQ_nombre_invalido.asm | Etiquetas | `(1LOOP)` | 4 | ERROR *** Línea 4: nombre de etiqueta inválido '1LOOP' |
-| ens_11_ETIQ_predefinido.asm | Etiquetas | `(SCREEN)` | 4 | ERROR *** Línea 4: la etiqueta SCREEN usa el nombre de un símbolo predefinido |
-| ens_12_ETIQ_predefinido_R0.asm | Etiquetas | `(R0)` | 4 | ERROR *** Línea 4: la etiqueta R0 usa el nombre de un símbolo predefinido |
-| ens_13_DEST_desconocido.asm | Destino | `X=D` | 4 | ERROR *** Línea 4: destino inválido X |
+| ens_10_ETIQ_nombre_invalido.asm | Etiquetas | (1LOOP) | 4 | ERROR *** Línea 4: nombre de etiqueta inválido '1LOOP' |
+| ens_11_ETIQ_predefinido.asm | Etiquetas | (SCREEN) | 4 | ERROR *** Línea 4: la etiqueta SCREEN usa el nombre de un símbolo predefinido |
+| ens_12_ETIQ_predefinido_R0.asm | Etiquetas | (R0) | 4 | ERROR *** Línea 4: la etiqueta R0 usa el nombre de un símbolo predefinido |
+| ens_13_DEST_desconocido.asm | Destino | X=D | 4 | ERROR *** Línea 4: destino inválido X |
 | ens_14_DEST_DM.asm | Destino | DM=D+1 | 4 | ERROR *** Línea 4: destino invalido DM |
 | ens_15_DEST_ADM.asm | Destino | ADM=M | 4 | ERROR *** Línea 4: destino invalido ADM |
 | ens_16_DEST_MA.asm | Destino | MA=1 | 4 | ERROR *** Línea 4: destino inválido MA |
@@ -77,7 +77,7 @@ Los casos del 1 a 30 tienen la forma: linea 1 comentario, linea 2 en blanco, lí
 | ens_27_SALTO_minusculas.asm | Salto | 0;jmp | 4 | ERROR *** Linea 4: salto invalido jmp |
 | ens_28_ESTR_dos_iguales.asm | Estructura | D=M=A| 4 | ERROR *** Linea 4: mas de un = en la instruccion |
 | ens_29_ESTR_dos_puntoycoma.asm | Estructura | D;JGT;JMP | 4 | ERROR *** Linea 4: mas de un ; en la instruccion |
-| ens_30_ESTR_texto.asm | Estructura | `HOLA MUNDO` | 4 | ERROR *** Línea 4: cómputo inválido 'HOLAMUNDO' |
+| ens_30_ESTR_texto.asm | Estructura | `HOLA MUNDO` | 4 | ERROR *** Línea 4: cómputo inválido HOLAMUNDO |
 | ens_31_ETIQ_duplicada.asm | Etiquetas | etiqueta declarada dos veces: se reporta la 2.ª declaración | 4 | ERROR *** Linea 4: etiqueta LOOP declarada mas de una vez |
 | ens_32_PRIMER_ERROR.asm | Orden | dos errores y se reporta el primero | 3 | ERROR *** Linea 3: destino invalido X|
 | ens_33_FIN_CRLF.asm | Fin de la linea | archivo con CRLF: la numeración de líneas no cambia | 4 | ERROR *** Linea 4: destino inválido DM|
@@ -89,8 +89,8 @@ Los casos del 1 a 10 tienen la forma: lineas 1 y 2 validas, **linea 3 inválida*
 
 | Archivo | Categoria | Línea invalida | Linea esperada | Mensaje |
 |---|---|---|---|---|
-| des_01_LONG_15.hack | Longitud | `000000000000000` | 3 | ERROR *** Linea 3: longitud inválida: 15 caracteres (se esperaban 16) |
-| des_02_LONG_17.hack | Longitud | `00000000000000000` | 3 | ERROR *** Linea 3: longitud inválida: 17 caracteres (se esperaban 16) |
+| des_01_LONG_15.hack | Longitud | 000000000000000 | 3 | ERROR *** Linea 3: longitud inválida: 15 caracteres (se esperaban 16) |
+| des_02_LONG_17.hack | Longitud | 00000000000000000 | 3 | ERROR *** Linea 3: longitud inválida: 17 caracteres (se esperaban 16) |
 | des_03_LONG_espacio_final.hack | Longitud | 1111110000010000 + un espacio al final | 3 | ERROR *** Linea 3: longitud invalida: 17 caracteres |
 | des_04_LONG_vacia_en_medio.hack | Longitud | (línea vacía) | 3 | ERROR *** Línea 3: longitud invalida: 0 caracteres |
 | des_05_CAR_dos.hack | Caracteres | 0000000000000200 | 3 | ERROR *** Linea 3: caracter invalido 2 en la posicion 14  |
