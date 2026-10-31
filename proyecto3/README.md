@@ -26,6 +26,8 @@ el trabajo se realizo en java, JDK 8 o superior (el código se compila con --rel
 - ensamblador.sh recibe la ruta de un .asm y genera el .hack en la misma carpeta 
 - desensamblador.sh recibe la ruta de un .hack y genera ProgDis.asm en la misma carpeta 
 - Si bin/ no existe, los scripts de ejecución llaman solos a compilar.sh.
+- - Sin errores, el codigo de salida es 0. cuando pasa un error se imprime en la salida estandar ERROR *** Línea N: <mensaje>, se termina con codigo 1 y no se genera el archivo de salida.
+    
 ## Descripcion de los 2 ensambladores
 **Ensamblador:** da dos pasadas. La primera valida cada linea en orden, registra las etiquetas con su dirección y guarda las instrucciones que analiza. La segunda resuelve los símbolos y codifica.
 
