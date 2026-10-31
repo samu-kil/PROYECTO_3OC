@@ -3,7 +3,7 @@ se implemento un ensamblador (Prog.asm → Prog.hack) y un desensamblador (Prog.
 ## integrantes
 -Samuel Quintero Quintero
 ## compilado y ejecucion
-### platarofma
+### plataforma
 gran parte del proyecto se ejecuto en gitbash desde la carpeta de proyecto 3
 ### lenguaje
 el trabajo se realizo en java, JDK 8 o superior (el código se compila con --release 8), las clases corren en cualquier java 8
