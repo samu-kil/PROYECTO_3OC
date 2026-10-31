@@ -28,6 +28,7 @@ el trabajo se realizo en java, JDK 8 o superior (el código se compila con --rel
 - Si bin/ no existe, los scripts de ejecución llaman solos a compilar.sh.
 ## Descripcion de los 2 ensambladores
 **Ensamblador:** da dos pasadas. La primera valida cada linea en orden, registra las etiquetas con su dirección y guarda las instrucciones que analiza. La segunda resuelve los símbolos y codifica.
+
 **Desensamblador:** decodifica y valida todas las lineas y después marca como destino toda direccion v ≤ n cargada por una instrucción A que precede a una C con salto, nombra los destinos L0, L1… por orden de dirección y escribe el programa con sus etiquetas. Al volver a ensamblar el resultado se obtiene el mismo .hack.
 
 ## Estructura del código
